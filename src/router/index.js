@@ -5,6 +5,12 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 
+const Header = (resolve) => {
+  import ('@/components/header/header').then((module) => {
+      resolve(module)
+  })
+}
+
 const NewsList = (resolve) => {
   import ('@/view/news/newsList').then((module) => {
       resolve(module)
@@ -17,6 +23,11 @@ export default new Router({
       path: '/',
       name: 'newsList',
       component: NewsList
+    },
+    {
+      path: '/',
+      name: 'header',
+      component: Header
     },
     {
       path: '/newsList',

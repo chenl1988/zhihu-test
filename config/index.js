@@ -10,7 +10,21 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/v1': {
+        target: 'http://hero.shudong.wang/',
+        changeOrigin: true
+      },
+      '/api': {
+        /* 接口的域名 */
+        target: 'https://news-at.zhihu.com/api/4',
+        /* 如果接口跨域，需要配置这个参数 */
+        changeOrigin: true,
+        pathRewrite: {
+            '^/api': '/'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
