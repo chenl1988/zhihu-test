@@ -17,17 +17,28 @@ const NewsList = (resolve) => {
   })
 }
 
+const NewsDetail = (resolve) => {
+  import ('@/view/news/newsDetail').then((module) => {
+      resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
+    {
+      path: '/header',
+      name: 'header',
+      component: Header
+    },
     {
       path: '/',
       name: 'newsList',
       component: NewsList
     },
     {
-      path: '/',
-      name: 'header',
-      component: Header
+      path: '/newsDetail',
+      name: 'newsDetail',
+      component: NewsDetail
     },
     {
       path: '/newsList',

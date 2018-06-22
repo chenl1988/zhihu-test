@@ -14,3 +14,8 @@ function getData(_url,_data){
 export function getNewsList(){
     return getData('/api/news/latest')
 }
+
+export function getNewsDetail(params){
+    return getData('/api/news/'+params)
+
+}
