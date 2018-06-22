@@ -9,7 +9,7 @@
                 <div class="swiper-slide" v-for="topNews in topNewsList">
                     <router-link :to="{path:'/newsDetail',query:{ id:topNews.id }}"> 
                         <div class="swiper-img-wrapper">
-                            <img :src="topNews.image" alt=""  class="news-img" @load="resizeImg($event)">     
+                            <img :src="topNews.image" alt=""  class="news-img" @load="resizeImgFun($event)">     
                         </div>
                     </router-link>
                 </div>
@@ -21,11 +21,11 @@
         <ul class="news-list">
             <li class="news-item" v-for="newsItem in newsList">
                 <a href="javascript:;" class="new-item-wrapper">
-                    <div class="news-title-wrapper">
+                    <div class="news-title-wrapper"> 
                         <h3 class="new-title">{{ newsItem.title }}</h3>
                     </div>
                     <div class="new-img-wrapper">
-                        <img :src="newsItem.images[0]" alt=""  class="news-img" @load="resizeImg($event)">
+                        <img :src="newsItem.images[0]" alt=""  class="news-img" @load="resizeImgFun($event)">
                     </div>
                 </a>
             </li>
@@ -38,7 +38,8 @@
     import 'swiper/dist/css/swiper.min.css'
 
     import Header from '../../components/header/header'
-    import { getNewsList } from '../../api/interface.js'
+    import { getNewsList } from '../../api/interface'
+    import { resizeImg } from '../../api/utils'
 
     export default{ 
         components:{
@@ -71,37 +72,8 @@
             }); 
         },
         methods: {
-            getImage(url){
-                //console.log(url);
-                // 把现在的图片连接传进来，返回一个不受限制的路径
-                if(url !== undefined){
-                    console.log(url[0].replace(/http\w{0,1}:\/\/p/g,'https://images.weserv.nl/?url=p'))
-                    return url[0].replace(/http\w{0,1}:\/\/p/g,'https://images.weserv.nl/?url=p');
-                }
-            },
-            /* 换比例截图部分图片 */
-
-            resizeImg(img_) {
-                
-                let parent = img_.target.parentNode;
-
-                var width = parent.offsetWidth;
-                var height = parent.offsetHeight;
-                var img = new Image();
-
-                img.src = img_.target.getAttribute("src");
-                var scale = Math.max(width / img_.target.offsetWidth, height / img_.target.offsetHeight);
-                var newWidth = img_.target.offsetWidth * scale;
-                var newHeight = img_.target.offsetHeight * scale;
-
-                img_.target.width = newWidth;
-                img_.target.height = newHeight;
-                img_.target.style.marginLeft = (width - newWidth) / 2 + "px";
-                img_.target.style.marginTop = (height - newHeight) / 2 + "px";
-
-                parent.style.width = width;
-                parent.style.height = height;
-                parent.style.overflow = "hidden";
+            resizeImgFun(_img){
+                resizeImg(_img)
             }
         }
     }
